@@ -12,8 +12,8 @@ import CoreML
 import FirebaseDatabase
 import FirebaseMLVision
 import Firebase
-import FirebaseMLNLLanguageID
-import FirebaseMLCommon
+import AVFoundation
+import Speech
 
 class ImagePreview: UIViewController {
     
@@ -25,9 +25,18 @@ class ImagePreview: UIViewController {
     
     var index:Int = 0
     
+    @IBOutlet weak var speechLabel: UILabel!
+    
     public var capturedImage: UIImage?
     @IBOutlet weak var imageView: UIImageView!
     
+    let audioEngine = AVAudioEngine()
+    
+    let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))
+    
+    let request = SFSpeechAudioBufferRecognitionRequest()
+    
+    var recognitionTask: SFSpeechRecognitionTask?
     
     var detectedObject: String = ""
     var databaseHandle:DatabaseHandle = 0
@@ -59,16 +68,14 @@ class ImagePreview: UIViewController {
                     
                     let visionImage = VisionImage(image: image)
                     
-                    self.textRecognizer.process(visionImage) { result, error in
-                        guard error == nil, let result = result else {
+                    /* self.textRecognizer.process(visionImage, completion: { (text, error) in
+                        guard error == nil, let result = text else {
                             return
                         }
-                        
-                       let resultText = result.text
-                        self.detect.stringToSpeech(speech: resultText)
-                    }
-              
-                    
+                        self.detect.stringToSpeech(speech: result.text)
+                    })
+ */
+ 
                 }
             }
             if let imageData = image.jpegData(compressionQuality: 1.0) {
@@ -80,22 +87,37 @@ class ImagePreview: UIViewController {
         
     }
     
-
-    
-    @IBAction func saveString(_ sender: Any) {
-        let deviceName = UIDevice.current.name
-        
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateStyle = .full
-        dateFormatter.timeStyle = .full
-        
-        let dateString = dateFormatter.string(from: date)
-        
-        self.ref.child("iOS").child(deviceName).child("Objects").child(dateString).setValue(detectedObject)
-        
+    @IBAction func startRecording(_ sender: Any) {
+       self.recordAndRecognizeSpeech()
     }
     
-}
+    func recordAndRecognizeSpeech(){
+        
+        let node = audioEngine.inputNode
+        let recordingFormat = node.outputFormat(forBus: 0)
+        node.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
+            self.request.append(buffer)
+    }
+        
+        
+        audioEngine.prepare()
+            do{
+                try? audioEngine.start()
+                
+                recognitionTask = speechRecognizer?.recognitionTask(with: request, resultHandler: { (result, error) in
+                    if let result = result{
+                        self.speechLabel.text = result.bestTranscription.formattedString
+                        self.speechLabel.isEnabled = true
+                        
+                    } else if let error = error {
+                        print(error)
+                    }
+                })
+                
+            }
+            catch{
+                print(error)
+            }
+        }
+    }
 
