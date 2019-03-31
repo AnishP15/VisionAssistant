@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import AVFoundation
+import FirebaseDatabase
 
 @available(iOS 10.0, *)
 class CameraView : UIViewController {
@@ -17,11 +18,11 @@ class CameraView : UIViewController {
     var camera : AVCaptureDevice?
     var cameraPreviewLayer : AVCaptureVideoPreviewLayer?
     var cameraCaptureOutput : AVCapturePhotoOutput?
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeCaptureSession()
-        // Do any additional setup after loading the view, typically from a nib.
+        
     }
     
     func displayCapturedPhoto(capturedPhoto : UIImage) {

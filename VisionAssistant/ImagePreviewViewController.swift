@@ -22,6 +22,7 @@ class ImagePreview: UIViewController {
     var detect = Speech()
     var ref:DatabaseReference!
     var observations:[String] = []
+    var DatabaseHandle: DatabaseHandle?
     
     var index:Int = 0
     
@@ -107,8 +108,17 @@ class ImagePreview: UIViewController {
                 recognitionTask = speechRecognizer?.recognitionTask(with: request, resultHandler: { (result, error) in
                     if let result = result{
                         self.speechLabel.text = result.bestTranscription.formattedString
-                        self.speechLabel.isEnabled = true
-                        
+                        if result.bestTranscription.formattedString.contains("copy"){
+                            self.ref.child("users").setValue(["copied": result.bestTranscription.formattedString])
+                            let stringResult = result.bestTranscription.formattedString.replacingOccurrences(of: "copy", with: "")
+                            UIPasteboard.general.string = stringResult
+
+                        }
+                        if result.bestTranscription.formattedString.contains("paste"){
+                            self.databaseHandle = self.ref.child("users").child("copied").observe(.value , with: { (snapshot) in
+                                
+                            })
+                        }
                     } else if let error = error {
                         print(error)
                     }

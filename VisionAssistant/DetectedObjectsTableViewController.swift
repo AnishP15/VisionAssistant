@@ -23,12 +23,12 @@ class DetectedObjects: UITableViewController {
         super.viewDidLoad()
         
         ref = Database.database().reference()
-        
-        let deviceName = UIDevice.current.name
-        self.databaseHandle = self.ref.child("iOS").child(deviceName).child("Objects").observe(.childAdded, with: { (snapshot) in
-            let post = snapshot.value as? String
+       
+        self.databaseHandle = self.ref.child("users").child("copied").observe(.value , with: { (snapshot) in
             
-            if let actualPost = post {
+            let post = snapshot.value as? String
+            let stringPost = post?.replacingOccurrences(of: "copy", with: "")
+            if let actualPost = stringPost {
                 self.observations.append(actualPost)
             }
             
@@ -36,8 +36,7 @@ class DetectedObjects: UITableViewController {
         })
     }
     
-    // MARK: - Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
+     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
@@ -48,8 +47,7 @@ class DetectedObjects: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        // Configure the cell...
-        
+ 
         cell.textLabel?.text = observations[indexPath.row]
         
         return cell

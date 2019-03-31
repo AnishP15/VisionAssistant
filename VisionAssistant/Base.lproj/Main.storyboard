@@ -102,10 +102,12 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XZw-xe-mIj">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8b9-z4-G4a">
-                                <rect key="frame" x="9" y="374" width="366" height="235"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFf-mh-SxB">
+                                <rect key="frame" x="16" y="587" width="343" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="IJk-1B-DT9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -114,10 +116,13 @@
                         <constraints>
                             <constraint firstItem="XZw-xe-mIj" firstAttribute="leading" secondItem="Hx7-4a-KtV" secondAttribute="leading" id="21d-S8-2dK"/>
                             <constraint firstItem="O9Q-jX-6H7" firstAttribute="top" secondItem="Hx7-4a-KtV" secondAttribute="top" id="6UN-ct-qZR"/>
+                            <constraint firstItem="q7P-IE-3e3" firstAttribute="trailing" secondItem="MFf-mh-SxB" secondAttribute="trailing" constant="16" id="8Hc-Zv-rzG"/>
+                            <constraint firstItem="MFf-mh-SxB" firstAttribute="leading" secondItem="q7P-IE-3e3" secondAttribute="leading" constant="16" id="Bww-tf-Zq0"/>
                             <constraint firstItem="O9Q-jX-6H7" firstAttribute="trailing" secondItem="q7P-IE-3e3" secondAttribute="trailing" id="C93-oC-RHc"/>
                             <constraint firstAttribute="trailing" secondItem="XZw-xe-mIj" secondAttribute="trailing" id="WcH-T0-MJY"/>
                             <constraint firstItem="XZw-xe-mIj" firstAttribute="bottom" secondItem="q7P-IE-3e3" secondAttribute="bottom" id="XnG-Q4-TqM"/>
                             <constraint firstItem="XZw-xe-mIj" firstAttribute="top" secondItem="Hx7-4a-KtV" secondAttribute="top" id="dg3-Bl-2kk"/>
+                            <constraint firstItem="q7P-IE-3e3" firstAttribute="bottom" secondItem="MFf-mh-SxB" secondAttribute="bottom" constant="20" id="dxR-Ho-PLD"/>
                             <constraint firstItem="XZw-xe-mIj" firstAttribute="trailing" secondItem="q7P-IE-3e3" secondAttribute="trailing" id="hQs-1h-pog"/>
                             <constraint firstItem="XZw-xe-mIj" firstAttribute="bottom" secondItem="q7P-IE-3e3" secondAttribute="bottom" id="hXl-tZ-3jf"/>
                             <constraint firstItem="XZw-xe-mIj" firstAttribute="leading" secondItem="q7P-IE-3e3" secondAttribute="leading" id="k6q-II-ihO"/>
@@ -129,7 +134,7 @@
                     </view>
                     <connections>
                         <outlet property="imageView" destination="XZw-xe-mIj" id="l3S-3n-4O0"/>
-                        <outlet property="speechLabel" destination="8b9-z4-G4a" id="Zry-E7-xRd"/>
+                        <outlet property="speechLabel" destination="MFf-mh-SxB" id="xhX-Dd-en6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TA3-kM-CTL" userLabel="First Responder" sceneMemberID="firstResponder"/>
